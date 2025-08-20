@@ -1,0 +1,31 @@
+# Cache all model artifacts by default
+model/**
+
+# Keep mutable weight files (do not ignore)
+!model/**/model.safetensors
+!model/**/pytorch_model.bin
+!model/**/tf_model.h5
+!model/**/flax_model.msgpack
+!model/**/*.onnx
+!model/**/rust_model.ot
+
+# Still ignore common static/config files
+model/**/config.json
+model/**/tokenizer.json
+model/**/tokenizer_config.json
+model/**/special_tokens_map.json
+model/**/spm.model
+model/**/merges.txt
+model/**/vocab.txt
+model/**/modules.json
+model/**/sentence_bert_config.json
+model/**/README.md
+model/**/LICENSE
+
+# Misc
+__pycache__/
+*.pyc
+
+config.json
+
+demo/.env

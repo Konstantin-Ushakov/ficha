@@ -1,0 +1,19 @@
+services:
+  semantic-analyzer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - ./env.example
+    environment:
+      - TEST_CATEGORY
+      - STRICT_SHOULD_FAIL
+      - HF_HOME=/app/model
+      - SENTENCE_TRANSFORMERS_HOME=/app/model
+      - NLI_MODEL_DIR=/app/model/models--MoritzLaurer--mDeBERTa-v3-base-xnli-multilingual-nli-2mil7
+    volumes:
+      - ${USER_FEATURES_PATH:-./demo/example}:/workspace/user-features:ro
+      - ${FEATURE_TESTS_PATH:-./demo/example}:/workspace/tests:ro
+      - ${MODEL_PATH:-./model}:/app/model
+    working_dir: /app
+

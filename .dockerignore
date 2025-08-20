@@ -1,0 +1,32 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+LICENSE
+*.md
+
+# Examples and demo
+demo/
+examples/
+
+# Configuration examples
+config.example.jsonc
+env.example
+
+# Development files
+*.pyc
+__pycache__/
+*.log
+*.tmp
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

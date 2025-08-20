@@ -1,0 +1,110 @@
+{
+  // Основные модели и эмбеддинги
+  "EMBEDDING_MODEL": "paraphrase-multilingual-MiniLM-L12-v2",
+  // Путь к основной NLI модели для определения противоречий
+  "NLI_MODEL_DIR": "/app/model/models--MoritzLaurer--mDeBERTa-v3-base-xnli-multilingual-nli-2mil7/snapshots/b5113eb38ab63efdd7f280f8c144ea8b13f978ce",
+  // Путь к дополнительной NLI модели для улучшенной точности
+  "NLI2_MODEL_DIR": "/app/model/models--joeddav--xlm-roberta-large-xnli",
+
+  // Пороги семантического сходства
+  "SIM_THRESHOLD": 0.45,
+  // Порог для сравнения целей фичи с функциями в тестах
+  "GOAL_SIM_THRESHOLD": 0.60,
+
+  // Настройки противоречий
+  "MD_CONTRA_ENFORCE": 1,
+  // Требовать наличие отрицания для детекта противоречий в Then
+  "THEN_NEG_REQUIRE_NEGATION": 1,
+  // Порог сходства для детекта противоречий в Then
+  "THEN_NEG_SIM": 0.85,
+  // Максимальный Jaccard для пар Then
+  "THEN_PAIR_JACC_MAX": 0.30,
+
+  // Настройки для соседних сценариев
+  "GW_SIM_ADJ": 0.90,
+  // Максимальный Jaccard для Then в соседних сценариях
+  "ADJ_THEN_JACC_MAX": 0.30,
+  // Требовать NLI проверку для соседних сценариев
+  "ADJ_REQUIRE_THEN_NLI": 1,
+  // Минимальный порог противоречий для соседних сценариев
+  "ADJ_NLI_CONTRA_MIN": 0.65,
+  // Маржа для NLI проверки соседних сценариев
+  "ADJ_NLI_MARGIN": 0.15,
+
+  // Двухэтапная проверка Then
+  "THEN_TWO_STAGE": 1,
+  // Порог противоречий для второй NLI модели
+  "NLI2_CONTRA_THRESHOLD": 0.68,
+  // Маржа для второй NLI модели
+  "NLI2_MARGIN": 0.18,
+
+  // Настройки NLI анализа
+  "NLI_TOPK": 10,
+  "NLI_BOTTOMK": 5,
+
+  // Общие пороги
+  "THRESHOLD": 0.60,
+  // Строгая проверка should_fail сценариев
+  "STRICT_SHOULD_FAIL": 1,
+  // Порог покрытия для hit score
+  "COV_SCORE_HIT": 0.80,
+
+  // Конфигурация метрик
+  "metrics": {
+    // Метрики определения фичи
+    "feature_definition": {
+      // Включить проверку согласованности терминологии
+      "TERMINOLOGY_CONSISTENCY_ENABLE": true,
+      // Включить валидацию фичи через FVI_mit
+      "FVI_MIT_ENABLE": true,
+      // Включить детект многосмысловости
+      "MULTI_INTENT_ENABLE": true
+    },
+    // Метрики дублирования в markdown
+    "md_duplicates": {
+      // Включить поиск дубликатов через BM25
+      "DUPS_BM25_ENABLE": true,
+      // Включить поиск дубликатов через TF-IDF
+      "DUPS_TFIDF_ENABLE": true
+    },
+    // Метрики покрытия
+    "coverage_all": {
+      // Включить общее покрытие (hit_rate)
+      "HIT_ENABLE": true,
+      // Включить лексическое покрытие (kw_hit_rate)
+      "KW_HIT_ENABLE": true,
+      // Включить семантическое покрытие через NLI
+      "NLI_HIT_ENABLE": false,
+      // Включить структурное покрытие шагов
+      "STEP_HIT_ENABLE": true,
+      // Включить Jaccard по леммам
+      "JACCARD_LEMMA_ENABLE": true,
+      // Включить выравнивание кардинальности
+      "CARDINALITY_ALIGNMENT_ENABLE": true,
+      // Включить BM25 для покрытия
+      "BM25_ENABLE": true,
+      // Включить TF-IDF для покрытия
+      "TFIDF_ENABLE": true,
+      // Включить анализ графа покрытия
+      "GRAPH_COVERAGE_ENABLE": true
+    },
+    // Метрики по сценариям
+    "per_scenario": {
+      // Включить пер-сценарное соответствие
+      "PER_SCENARIO_ENABLE": true,
+      // Включить плотность трассируемости
+      "TRACE_DENSITY_ENABLE": true
+    },
+    // Метрики качества структуры
+    "quality_structure": {
+      // Включить валидацию заголовка .feature
+      "FEATURE_HEADER_VALID_ENABLE": true,
+      // Включить детект дубликатов сценариев
+      "DUP_SCENARIOS_ENABLE": true,
+      // Включить проверку goal alignment
+      "GOAL_ENABLE": true,
+      // Включить детект противоречий
+      "CONTRA_ENABLE": true
+    }
+  }
+}
