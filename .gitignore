@@ -26,6 +26,7 @@ model/**/LICENSE
 __pycache__/
 *.pyc
 
+# Track only example; real config via ENV or external mount
 config.json
 
 demo/.env

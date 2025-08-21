@@ -141,9 +141,12 @@ def main():
         pass
     # Load analyzer config and export to env BEFORE importing metrics to ensure precedence over .env
     cfg_used = None
+    # Load analyzer config and export to env BEFORE importing metrics to ensure precedence over .env
+    cfg_used = None
     cfg_paths = [
-        base / "tests" / "analyze" / "config.json",
-        base / "tests" / "analyze" / "config.example.json",
+        Path("/app/config.json"),  # Docker container path
+        base / "tests" / "analyze" / "config.json",  # Mounted workspace path
+        base / "tests" / "analyze" / "config.example.jsonc",  # Fallback example
     ]
     def _export_cfg(obj: dict):
         # Export flat primitives
@@ -165,7 +168,17 @@ def main():
     for cfg in cfg_paths:
         try:
             if cfg.exists():
-                data = json.loads(cfg.read_text(encoding="utf-8"))
+                # Strip JSONC comments (// and /* */) before json.loads
+                raw_text = cfg.read_text(encoding="utf-8")
+                try:
+                    import re as _re_jsonc
+                    # remove // comments
+                    raw_text = _re_jsonc.sub(r"//.*?$", "", raw_text, flags=_re_jsonc.MULTILINE)
+                    # remove /* ... */ comments
+                    raw_text = _re_jsonc.sub(r"/\*.*?\*/", "", raw_text, flags=_re_jsonc.DOTALL)
+                except Exception:
+                    pass
+                data = json.loads(raw_text)
                 _export_cfg(data)
                 cfg_used = str(cfg)
                 break
@@ -819,6 +832,8 @@ def main():
                         print(f"    - [{ord_idx}] <out of range>")
         except Exception:
             pass
+        # Разделитель между результатами по разным парам .md ↔ .feature
+        print("")
     # General summary: reuse unexpected outcomes list to compute correctness
     total = len(results)
     if total > 0:
